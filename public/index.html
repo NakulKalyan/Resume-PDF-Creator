@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume PDF Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    h1 {
+      color: #007ACC;
+    }
+    form {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    label {
+      font-weight: bold;
+    }
+    input, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #007ACC;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #005f8a;
+    }
+  </style>
+</head>
+<body>
+  <h1>Resume PDF Generator</h1>
+  <form id="resumeForm">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="phone">Phone:</label>
+    <input type="text" id="phone" name="phone" required>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="linkedIn">LinkedIn:</label>
+    <input type="text" id="linkedIn" name="linkedIn">
+
+    <label for="github">GitHub:</label>
+    <input type="text" id="github" name="github">
+
+    <label for="education">Education (separate by commas):</label>
+    <textarea id="education" name="education" rows="4"></textarea>
+
+    <label for="internship">Internship Experience (separate by commas):</label>
+    <textarea id="internship" name="internship" rows="4"></textarea>
+
+    <label for="projects">Projects (separate by commas):</label>
+    <textarea id="projects" name="projects" rows="4"></textarea>
+
+    <label for="certifications">Certifications (separate by commas):</label>
+    <textarea id="certifications" name="certifications" rows="4"></textarea>
+
+    <label for="skills">Skills (separate by commas):</label>
+    <textarea id="skills" name="skills" rows="4"></textarea>
+
+    <label for="photo">Upload Passport Photo:</label>
+    <input type="file" id="photo" name="photo" accept="image/*">
+
+    <button type="submit">Generate PDF</button>
+  </form>
+
+  <script>
+    const form = document.getElementById('resumeForm');
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const formData = new FormData(form);
+
+      // Send data to server
+      const response = await fetch('/generate-pdf', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        const blob = await response.blob();
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = 'resume.pdf';
+        link.click();
+      } else {
+        alert('Failed to generate PDF');
+      }
+    });
+  </script>
+</body>
+</html>
