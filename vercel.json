@@ -2,7 +2,7 @@
     "version": 2,
     "builds": [
       {
-        "src": "server/app.js",
+        "src": "server/index.js",
         "use": "@vercel/node"
       },
       {
@@ -11,7 +11,7 @@
       }
     ],
     "routes": [
-      { "src": "/generate-pdf", "dest": "server/app.js" },
+      { "src": "/generate-pdf", "dest": "server/index.js" },
       { "src": "/(.*)", "dest": "/public/index.html" }
     ]
   }
